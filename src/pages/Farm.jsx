@@ -70,7 +70,6 @@ const Farm = () => {
             "https://ndvi-vwp8.onrender.com/ndvi/",
             {
               method: "POST",
-              mode: 'no-cors', // remove for production
               headers: { "Content-Type": "application/json" },
               body: JSON.stringify(requestData),
             }
