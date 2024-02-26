@@ -17,7 +17,7 @@ const Farmer = () => {
     password: "kjbsdjbsdf", // Omit password for security reasons
     contactNumber: "+1234567890",
     cooperativeName: "AGRIC COOP-GHANA",
-    publicKey: "jksndnljs",
+    publicKey: Cookies.get("account"),
     chainId: "ln;skd",
   });
 

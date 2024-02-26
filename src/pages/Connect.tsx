@@ -15,8 +15,6 @@ export default function Card({connector, hooks, name}: {connector: Connector, ho
   const [error, setError] = useState<Error | undefined>(undefined)
   const [connectionStatus, setConnectionStatus] = useState('Disconnected')
 
-  const isLoggedIn = Cookies.get('account');
-
   const handleToggleConnect = () => {
     setError(undefined) // clear error state
 
@@ -42,6 +40,7 @@ export default function Card({connector, hooks, name}: {connector: Connector, ho
       Cookies.set('account', account, { expires: 7 })
     } else {
       setConnectionStatus('Disconnected')
+      //Cookies.remove('account')
     }
   }
   ,[isActive])
@@ -56,12 +55,6 @@ export default function Card({connector, hooks, name}: {connector: Connector, ho
       <button onClick={handleToggleConnect} disabled={false}>
         {isActive ? "Disconnect" : "Connect"}
       </button>
-
-      {isLoggedIn ? (
-        <button onClick={() => Cookies.remove('account')}>Logout</button>
-      ) : (
-        <button>Login</button>
-      )}
     </div>
   )
 }

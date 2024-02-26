@@ -7,6 +7,8 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { useNavigate } from "react-router-dom";
+import Cookies from 'js-cookie';
+
 
 export default function Home() {
   const nftImages = [
@@ -27,6 +29,13 @@ export default function Home() {
     event.preventDefault();
     // check if farmer already exists
     navigate("/farmer");
+
+    // used for testing, clear all cookies
+    // Cookies.remove('farmerId')
+    // Cookies.remove('account');
+    // Cookies.remove('account');
+    // Cookies.remove('chain');
+    // Cookies.remove('Connected');
   };
 
   return (
