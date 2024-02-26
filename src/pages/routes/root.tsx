@@ -13,21 +13,21 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { Outlet, Link, useNavigate } from "react-router-dom";
-import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
-import { useConnection, useWallet } from '@solana/wallet-adapter-react'
-
+import Connect from "../Connect";
+import { useWeb3React } from "@web3-react/core";
+import Cookies from 'js-cookie';
 
 const pages = ['Home', 'About'];
 const settings = ['Profile', 'Add Farm', 'Dashboard'];
 
 function Root() {
   const navigate = useNavigate();
+  const isAuthenticated = !!Cookies.get('account');
+
+  const { connector, hooks } = useWeb3React();
 
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
   const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(null);
-
-  const { connection } = useConnection();
-  const { publicKey, sendTransaction } = useWallet();
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
@@ -50,15 +50,17 @@ function Root() {
   };
 
   const handleCloseUserMenu = (setting: string) => {
-    if (!publicKey) {
-      alert('Please connect your wallet!')
-      return
+    if (!isAuthenticated) {
+      // navigate('/login'); 
+      alert("You need to connect wallet");
+      return null; // Return null to prevent rendering anything else
+    } else {
+      if (setting === 'Add Farm') {
+        navigate("/formdata");
+      } else if (setting === 'Dashboard') {
+        navigate("/dashboard");
+      } 
     }
-    if (setting === 'Add Farm') {
-      navigate("/formdata");
-    } else if (setting === 'Dashboard') {
-      navigate("/dashboard");
-    } 
     setAnchorElUser(null);
   };
 
@@ -139,7 +141,7 @@ function Root() {
               textDecoration: 'none',
             }}
           >
-            LOGO = {publicKey?.toString()}
+            LOGO
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (
@@ -175,7 +177,7 @@ function Root() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-                <WalletMultiButton />
+              <Connect connector={connector} hooks={hooks} name='phantom' />
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>

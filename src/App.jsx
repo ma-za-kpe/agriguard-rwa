@@ -12,17 +12,12 @@ import Dashboard from "./pages/Dashboard";
 import Root from "./pages/routes/root";
 import ErrorPage from "./error-page";
 import Home from "./pages/routes/home";
+import MyFirstForm from "./pages/MyFirstForm";
+import Farmer from "../src/pages/Farmer";
+import Farm from "../src/pages/Farm";
+
 
 function App() {
-  // const router = createBrowserRouter(
-  //   createRoutesFromElements(
-  //     <>
-  //       <Route index element={<Root />} />
-  //       <Route exact path="formdata" element={<FarmerData />} />
-  //       <Route exact path="dashboard" element={<Dashboard />} />
-  //     </>
-  //   )
-  // );
   const router = createBrowserRouter([
     {
       path: "/",
@@ -44,6 +39,14 @@ function App() {
         {
           path: "/about",
           element: <About />,
+        },
+        {
+          path: "/farmer",
+          element: <Farmer />,
+        },
+        {
+          path: "/farm",
+          element: <Farm />,
         }
       ]
     },

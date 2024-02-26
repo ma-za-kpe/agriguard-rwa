@@ -1,4 +1,4 @@
-import { Grid, makeStyles } from '@mui/material';
+import { Container, Grid, makeStyles, Box } from '@mui/material';
 import * as React from 'react';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -6,6 +6,7 @@ import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
+import { useNavigate } from "react-router-dom";
 
 export default function Home() {
   const nftImages = [
@@ -20,20 +21,33 @@ export default function Home() {
     { id: 9, imageUrl: 'https://placekitten.com/g/200/200', title: 'NFT Image 3' },
   ];
 
+  const navigate = useNavigate();
+
+  const goToFarmer = (event) => {
+    event.preventDefault();
+    // check if farmer already exists
+    navigate("/farmer");
+  };
+
   return (
     <div id="contact">
+       <Box sx={{ backgroundColor: '#74b5f1', color: '#ffffff', py: 8 }}>
+      <Container maxWidth="lg">
+        <Typography variant="h2" component="h1" gutterBottom>
+          Register Your Farmland on Solana
+        </Typography>
+        <Typography variant="body1" paragraph>
+          Join the future of farming by registering your farmland as a real-world asset on the Solana blockchain. Empower your land with the latest technology and gain insights through NDVI calculations stored as chart cNFTs.
+        </Typography>
+        <Button variant="contained" color="primary" onClick={goToFarmer} size="large">
+          Get Started &raquo;
+        </Button>
+      </Container>
+    </Box>
+    <p></p>
         <Grid container spacing={3}>
           {nftImages.map((nft) => (
             <Grid item key={nft.id} xs={12} sm={6} md={4}>
-              {/* <Card>
-                <CardMedia
-                  image={nft.imageUrl}
-                  title={nft.title}
-                />
-                <Typography variant="h6" align="center" gutterBottom>
-                  {nft.title}
-                </Typography>
-              </Card> */}
               <Card sx={{ maxWidth: 345 }}>
                 <CardMedia
                   sx={{ height: 140 }}
