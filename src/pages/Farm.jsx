@@ -66,16 +66,25 @@ const Farm = () => {
 
         console.log("farmLocation ", requestData);
         // Making the request with only coordinates
-        const response = await fetch(
-            "http://127.0.0.1:8000/ndvi",
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(requestData),
-            }
-          );
+        // const response = await fetch(
+        //     "https://ndvi-vwp8.onrender.com/ndvi/",
+        //     {
+        //       method: "POST",
+        //       mode: 'no-cors', // remove for production
+        //       headers: { "Content-Type": "application/json" },
+        //       body: JSON.stringify(requestData),
+        //     }
+        //   );
+
+          // Making the request with only coordinates
+          axios.post('https://ndvi-vwp8.onrender.com/ndvi', requestData)
+          .then(response => {
+              console.log("Request successful:", response.data);
+          })
+          .catch(error => {
+              console.error("Error:", error);
+          });
         
-        console.log("response ", response);
 
         //  // Updated formData object
         //  const updatedFormData = {
