@@ -262,7 +262,7 @@ const Farm = () => {
           fullWidth
           sx={{ mb: 2 }}
         />
-        <MUI.Button type="submit" variant="contained" color="primary">
+        <MUI.Button type="submit" variant="contained" color="success">
           Submit
         </MUI.Button>
       </MUI.Box>
