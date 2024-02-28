@@ -1,29 +1,7 @@
 import * as MUI from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import html2canvas from "html2canvas";
-// import {
-//   Metaplex,
-//   keypairIdentity,
-//   irysStorage,
-// } from "@metaplex-foundation/js";
-import { Connection, clusterApiUrl } from "@solana/web3.js";
-import { createUmi } from '@metaplex-foundation/umi-bundle-defaults'
-import { mplBubblegum } from '@metaplex-foundation/mpl-bubblegum'
-import { publicKey } from "@metaplex-foundation/umi";
-import {
-  fetchMerkleTree,
-  fetchTreeConfigFromSeeds,
-} from "@metaplex-foundation/mpl-bubblegum";
 import Cookies from "js-cookie";
-
-const umi = createUmi('http://127.0.0.1:8899').use(mplBubblegum())
-const merkleTreeAddress = publicKey('...') // update public key
-const merkleTree = await fetchMerkleTree(umi, merkleTreeAddress)
-const treeConfig = await fetchTreeConfigFromSeeds(umi, {
-  merkleTree: merkleTreeAddress,
-})
-
 
 const Profile = () => {
   const navigate = useNavigate();
