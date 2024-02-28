@@ -59,7 +59,9 @@ function Root() {
         navigate("/formdata");
       } else if (setting === 'Dashboard') {
         navigate("/dashboard");
-      } 
+      } else if (setting === 'Profile') {
+        navigate("/profile");
+      }
     }
     setAnchorElUser(null);
   };
