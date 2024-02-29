@@ -1,3 +1,18 @@
+.raw-json-container {
+  width: 300px;
+  height: 300px;
+  overflow: auto; /* Add scrollbar when content exceeds dimensions */
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.raw-json-content {
+  margin: 0;
+  padding: 10px;
+  font-family: monospace;
+  white-space: pre-wrap;
+}
+
 html {
   box-sizing: border-box;
 }

@@ -69,14 +69,9 @@ const Dashboard = () => {
 
   const saveChartImage = () => {
     const chartContainer = document.getElementById("chart-container");
-    // html2canvas(chartContainer).then((canvas) => {
-    //   const imageData = canvas.toDataURL("image/png");
-    //   setImageData(imageData);
-    // });
-
-    html2canvas(document.querySelector("#chart-container")).then((canvas) => {
-      // document.body.appendChild(canvas)
-      console.log("canvas", canvas);
+    html2canvas(chartContainer).then((canvas) => {
+      const imageData = canvas.toDataURL("image/png");
+      setImageData(imageData);
     });
   };
 

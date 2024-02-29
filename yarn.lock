@@ -10382,6 +10382,11 @@ ignore@^5.2.0:
   resolved "https://registry.npmjs.org/ignore/-/ignore-5.3.1.tgz"
   integrity sha512-5Fytz/IraMjqpwfd34ke28PTVMjZjJG2MPn5t7OE4eUCUNf8BAa7b5WUS9/Qvr6mwOQS7Mk6vdsMno5he+T8Xw==
 
+image-conversion@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.npmjs.org/image-conversion/-/image-conversion-2.1.1.tgz"
+  integrity sha512-hnMOmP7q2jxA+52FZ+wHNhg3fdFRlgfngsQH2JQHEQkafY7tj/8F15e6Rv/RxDegc872jvyaRHwMbkTZK1Cjbg==
+
 image-size@^1.0.2:
   version "1.1.1"
   resolved "https://registry.npmjs.org/image-size/-/image-size-1.1.1.tgz"

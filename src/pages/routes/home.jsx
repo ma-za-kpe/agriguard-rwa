@@ -1,15 +1,75 @@
 import { Container, Grid, makeStyles, Box } from "@mui/material";
-import * as React from "react";
+// import * as React from "react";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Typography from "@mui/material/Typography";
+import Modal from "@mui/material/Modal";
+import { Paper } from "@mui/material";
+import html2canvas from "html2canvas";
+import {
+  LineChart,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  CartesianGrid,
+  Line,
+} from "recharts";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: 400,
+  bgcolor: "background.paper",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 export default function Home() {
+  // Define the state to store the fetched data
+  const [data, setData] = useState([]);
+  const [asset, setAsset] = useState([]);
+  const [chartData, setChart] = useState([]);
+
+  // Define the effect to fetch data when the component mounts
+  useEffect(() => {
+    // Define the URL of your backend endpoint
+    const backendURL = "http://localhost:3000/farm-fields"; // Replace with your actual backend URL
+
+    // Make a GET request to fetch the data
+    axios
+      .get(backendURL)
+      .then((response) => {
+        console.log("Data fetched successfully:", response.data[0].ndvi_chart);
+        //setChart(response.data[0].ndvi_chart);
+        // Split the data into lines and parse each line
+        const chartData = response.data[0].ndvi_chart
+          .split("\n")
+          .slice(1)
+          .map((line) => {
+            const [date, ndvi] = line.split(",");
+            return { date, ndvi: parseFloat(ndvi) };
+          });
+        setChart(chartData);
+        // Handle the successful response by updating the state with the fetched data
+        setData(response.data);
+      })
+      .catch((error) => {
+        // Handle errors
+        console.error("Error fetching data:", error);
+      });
+  }, []); // Empty dependency array to ensure the effect runs only once when the component mounts
+
   const nftImages = [
     {
       id: 1,
@@ -58,6 +118,32 @@ export default function Home() {
     },
   ];
 
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = async (assetId) => {
+    console.log(assetId);
+    setOpen(true);
+    event.preventDefault();
+    const url = `https://devnet.helius-rpc.com/?api-key=b96c6058-3f8a-414d-a166-722d95fe5c54`;
+    const response = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        jsonrpc: "2.0",
+        id: "my-id",
+        method: "getAsset",
+        params: {
+          id: assetId,
+        },
+      }),
+    });
+    const { result } = await response.json();
+    console.log("Asset: ", result);
+    setAsset(result);
+  };
+  const handleClose = () => setOpen(false);
+
   const navigate = useNavigate();
 
   const goToFarmer = (event) => {
@@ -102,7 +188,7 @@ export default function Home() {
       </Box>
       <p></p>
       <Grid container spacing={3}>
-        {nftImages.map((nft) => (
+        {data.map((nft) => (
           <Grid item key={nft.id} xs={12} sm={6} md={4}>
             <Card sx={{ maxWidth: 345 }}>
               <CardMedia
@@ -111,17 +197,64 @@ export default function Home() {
                 title="green iguana"
               />
               <CardContent>
-                <Typography gutterBottom variant="h5" component="div">
-                  {nft.title}
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  Lizards are a widespread group of squamate reptiles, with over
-                  6,000 species, ranging across all continents except Antarctica
-                </Typography>
+                <div id="chart-container">
+                  <Paper elevation={3} style={{ padding: 20, width: "100%" }}>
+                    <Typography variant="h6" gutterBottom>
+                      NDVI Chart
+                    </Typography>
+                    <LineChart
+                      width={800}
+                      height={400}
+                      data={chartData}
+                      margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
+                    >
+                      <XAxis dataKey="date" />
+                      <YAxis />
+                      <Tooltip />
+                      <Legend />
+                      <CartesianGrid stroke="#f5f5f5" />
+                      <Line
+                        type="monotone"
+                        dataKey="ndvi"
+                        stroke="#ff7300"
+                        yAxisId={0}
+                      />
+                    </LineChart>
+                  </Paper>
+                </div>
               </CardContent>
               <CardActions>
-                <Button size="small">Share</Button>
-                <Button size="small">Learn More</Button>
+                <Button onClick={() => handleOpen(nft.assetId)}>
+                  ClickAsset Id: {nft.assetId}
+                </Button>
+                <Modal
+                  open={open}
+                  onClose={handleClose}
+                  aria-labelledby="modal-modal-title"
+                  aria-describedby="modal-modal-description"
+                >
+                  <Box sx={style}>
+                    <Typography
+                      id="modal-modal-title"
+                      variant="h6"
+                      component="h2"
+                    >
+                      FARMER NFT ASSET DETAILS JSON
+                    </Typography>
+                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                      <Paper
+                        sx={{
+                          maxHeight: 300,
+                          overflow: "auto",
+                          width: 300,
+                          padding: 2,
+                        }}
+                      >
+                        <pre>{JSON.stringify(asset, null, 2)}</pre>
+                      </Paper>
+                    </Typography>
+                  </Box>
+                </Modal>
               </CardActions>
             </Card>
           </Grid>
