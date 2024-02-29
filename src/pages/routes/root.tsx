@@ -18,8 +18,8 @@ import { useWeb3React } from "@web3-react/core";
 import Cookies from 'js-cookie';
 import Logo from "/assets/logo.png"
 
-const pages = ['Home', 'About'];
-const settings = ['Profile', 'Add Farm', 'Dashboard'];
+const pages = ['Home'];
+const settings = ['Profile', 'Dashboard'];
 
 function Root() {
   const navigate = useNavigate();
@@ -77,7 +77,7 @@ function Root() {
             variant="h6"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="/"
             sx={{
               mr: 2,
               display: { xs: 'none', md: 'flex' },
@@ -132,7 +132,7 @@ function Root() {
             variant="h5"
             noWrap
             component="a"
-            href="#app-bar-with-responsive-menu"
+            href="#"
             sx={{
               mr: 2,
               display: { xs: 'flex', md: 'none' },

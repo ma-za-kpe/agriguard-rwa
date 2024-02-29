@@ -165,7 +165,7 @@ export default function Home() {
 
   return (
     <div id="contact">
-      <Box sx={{ backgroundColor: "#74b5f1", color: "#ffffff", py: 8 }}>
+      <Box sx={{ backgroundColor: "#fff", py: 8 }}>
         <Container maxWidth="lg">
           <Typography variant="h2" component="h1" gutterBottom>
             Register Your Farmland on Solana
@@ -178,7 +178,7 @@ export default function Home() {
           </Typography>
           <Button
             variant="contained"
-            color="primary"
+            color="success"
             onClick={goToFarmer}
             size="large"
           >
