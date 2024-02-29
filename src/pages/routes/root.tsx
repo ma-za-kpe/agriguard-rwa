@@ -16,6 +16,7 @@ import { Outlet, Link, useNavigate } from "react-router-dom";
 import Connect from "../Connect";
 import { useWeb3React } from "@web3-react/core";
 import Cookies from 'js-cookie';
+import Logo from "/assets/logo.png"
 
 const pages = ['Home', 'About'];
 const settings = ['Profile', 'Add Farm', 'Dashboard'];
@@ -68,10 +69,10 @@ function Root() {
 
   return (
     <Container maxWidth="xl">
-    <AppBar position="static">
+    <AppBar position="static" sx={{backgroundColor: "green"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
-          <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
+          <img src={Logo} alt="Agriguard logo" width={64}/>
           <Typography
             variant="h6"
             noWrap
@@ -87,7 +88,7 @@ function Root() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            AGRIGUARD
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -143,7 +144,7 @@ function Root() {
               textDecoration: 'none',
             }}
           >
-            LOGO
+            AGRIGUARD
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {pages.map((page) => (

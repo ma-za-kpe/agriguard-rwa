@@ -92,7 +92,7 @@ const Dashboard = () => {
         </MUI.Typography>
         <MUI.Button
           variant="contained"
-          color="primary"
+          color="success"
           onClick={goToFarm}
           href="/add-farm"
         >
@@ -102,7 +102,7 @@ const Dashboard = () => {
       <div id="chart-container">
         <MUI.Paper elevation={3} style={{ padding: 20, width: "100%" }}>
           <MUI.Typography variant="h6" gutterBottom>
-            NDVI Chart
+            Carbon NDVI  Chart
           </MUI.Typography>
           <LineChart
             width={800}
