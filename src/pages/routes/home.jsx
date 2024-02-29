@@ -44,7 +44,7 @@ export default function Home() {
   // Define the effect to fetch data when the component mounts
   useEffect(() => {
     // Define the URL of your backend endpoint
-    const backendURL = "http://localhost:3000/farm-fields"; // Replace with your actual backend URL
+    const backendURL = "https://ecedilink.onrender.com/farm-fields"; // Replace with your actual backend URL
 
     // Make a GET request to fetch the data
     axios
@@ -186,25 +186,30 @@ export default function Home() {
           </Button>
         </Container>
       </Box>
-      <p></p>
-      <Grid container spacing={3}>
-        {data.map((nft) => (
-          <Grid item key={nft.id} xs={12} sm={6} md={4}>
-            <Card sx={{ maxWidth: 345 }}>
-              <CardMedia
-                sx={{ height: 140 }}
-                image={nft.imageUrl}
-                title="green iguana"
-              />
-              <CardContent>
-                <div id="chart-container">
-                  <Paper elevation={3} style={{ padding: 20, width: "100%" }}>
-                    <Typography variant="h6" gutterBottom>
-                      NDVI Chart
-                    </Typography>
+      <Box py={4}>
+        <Grid container spacing={3}>
+          {data.map((nft) => (
+            <Grid item key={nft.id} xs={12} sm={6} md={4}>
+              <Card
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  height: "100%",
+                }}
+              >
+                <CardMedia
+                  sx={{ pt: "56.25%" }} // 16:9 aspect ratio
+                  image={nft.imageUrl}
+                  title="NFT Image"
+                />
+                <CardContent sx={{ flexGrow: 1 }}>
+                  <Typography variant="h6" gutterBottom>
+                    NDVI Chart
+                  </Typography>
+                  <Paper elevation={3} sx={{ padding: 2, height: 300 }}>
                     <LineChart
-                      width={800}
-                      height={400}
+                      width={300}
+                      height={200}
                       data={chartData}
                       margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
                     >
@@ -221,45 +226,52 @@ export default function Home() {
                       />
                     </LineChart>
                   </Paper>
-                </div>
-              </CardContent>
-              <CardActions>
-                <Button onClick={() => handleOpen(nft.assetId)}>
-                  ClickAsset Id: {nft.assetId}
-                </Button>
-                <Modal
-                  open={open}
-                  onClose={handleClose}
-                  aria-labelledby="modal-modal-title"
-                  aria-describedby="modal-modal-description"
-                >
-                  <Box sx={style}>
-                    <Typography
-                      id="modal-modal-title"
-                      variant="h6"
-                      component="h2"
-                    >
-                      FARMER NFT ASSET DETAILS JSON
-                    </Typography>
-                    <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                      <Paper
-                        sx={{
-                          maxHeight: 300,
-                          overflow: "auto",
-                          width: 300,
-                          padding: 2,
-                        }}
-                      >
-                        <pre>{JSON.stringify(asset, null, 2)}</pre>
-                      </Paper>
-                    </Typography>
-                  </Box>
-                </Modal>
-              </CardActions>
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+                </CardContent>
+                <CardActions>
+                  <Button onClick={() => handleOpen(nft.assetId)}>
+                    Click Asset Id: {nft.assetId}
+                  </Button>
+                </CardActions>
+              </Card>
+            </Grid>
+          ))}
+        </Grid>
+      </Box>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box
+          sx={{
+            position: "absolute",
+            top: "50%",
+            left: "50%",
+            transform: "translate(-50%, -50%)",
+            width: 400,
+            bgcolor: "background.paper",
+            boxShadow: 24,
+            p: 4,
+          }}
+        >
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            FARMER NFT ASSET DETAILS JSON
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            <Paper
+              sx={{
+                maxHeight: 300,
+                overflow: "auto",
+                width: "100%",
+                padding: 2,
+              }}
+            >
+              <pre>{JSON.stringify(asset, null, 2)}</pre>
+            </Paper>
+          </Typography>
+        </Box>
+      </Modal>
     </div>
   );
 }
