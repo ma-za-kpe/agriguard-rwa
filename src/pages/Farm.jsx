@@ -100,11 +100,14 @@ const Farm = () => {
         farmerFields: Cookies.get("farmerId"),
       };
       // console.log(updatedFormData);
-      const response = await fetch("http://localhost:3000/farm-fields/", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(updatedFormData),
-      });
+      const response = await fetch(
+        "https://ecedilink.onrender.com/farm-fields/",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(updatedFormData),
+        }
+      );
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
@@ -113,7 +116,7 @@ const Farm = () => {
       // Extracting coordinates
       // Making the request with only coordinates
       axios
-        .post("http://127.0.0.1:8000/ndvi/", requestData)
+        .post("https://ndvi-vwp8.onrender.com/ndvi/", requestData)
         .then((response) => {
           console.log("Request successful:", response.data.cvs_data);
           // update the users farm profile with new ndvi chat data
@@ -124,7 +127,10 @@ const Farm = () => {
 
           // generate the chart image string
           axios
-            .put(`http://localhost:3000/farm-fields/${data._id}`, newData)
+            .put(
+              `https://ecedilink.onrender.com/farm-fields/${data._id}`,
+              newData
+            )
             .then((response) => {
               console.log("Resource updated successfully:", response.data);
               // create nft from chart
