@@ -100,14 +100,11 @@ const Farm = () => {
         farmerFields: Cookies.get("farmerId"),
       };
       // console.log(updatedFormData);
-      const response = await fetch(
-        "https://ecedilink.onrender.com/farm-fields/",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(updatedFormData),
-        }
-      );
+      const response = await fetch("http://localhost:3000/farm-fields/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedFormData),
+      });
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);
       }
@@ -128,15 +125,12 @@ const Farm = () => {
           // generate the chart image string
           axios
             .put(
+              //
               `https://ecedilink.onrender.com/farm-fields/${data._id}`,
               newData
             )
             .then((response) => {
               console.log("Resource updated successfully:", response.data);
-              // create nft from chart
-              // pass chart data to the nft creation method
-              // pass
-              // Navigate to the dashboard after successful update
               navigate("/dashboard");
             })
             .catch((error) => {

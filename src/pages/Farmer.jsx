@@ -1,10 +1,13 @@
-import React, { useState } from 'react';
-import * as MUI from '@mui/material';
+import React, { useState } from "react";
+import * as MUI from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
 const Farmer = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { publicKey, sendTransaction } = useWallet();
+  const base58Pubkey = publicKey.toBase58();
 
   // Use state to store form values
   const [formData, setFormData] = useState({
@@ -17,7 +20,7 @@ const Farmer = () => {
     password: "kjbsdjbsdf", // Omit password for security reasons
     contactNumber: "+1234567890",
     cooperativeName: "AGRIC COOP-GHANA",
-    publicKey: Cookies.get("account"),
+    publicKey: base58Pubkey,
     chainId: "ln;skd",
   });
 
@@ -33,29 +36,29 @@ const Farmer = () => {
     // Handle form submission logic here
     console.log("Form data:", formData); // For demonstration purposes
     try {
-        console.log(formData);
-  
-        const response = await fetch(
-          "https://ecedilink.onrender.com/farmer-fields",
-          {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(formData),
-          }
-        );
-  
-        if (!response.ok) {
-          throw new Error(`Error: ${response.statusText}`);
+      console.log(formData);
+
+      const response = await fetch(
+        "https://ecedilink.onrender.com/farmer-fields",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(formData),
         }
-  
-        const data = await response.json();
-        // save id to cookie
-        Cookies.set('farmerId', data._id, { expires: 7 })
-        console.log("Farmer data created successfully:", data);
-        navigate("/dashboard");
-      } catch (error) {
-        console.error("Error sending form data:", error.code);
+      );
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.statusText}`);
       }
+
+      const data = await response.json();
+      // save id to cookie
+      Cookies.set("farmerId", data._id, { expires: 7 });
+      console.log("Farmer data created successfully:", data);
+      navigate("/dashboard");
+    } catch (error) {
+      console.error("Error sending form data:", error.code);
+    }
   };
 
   return (

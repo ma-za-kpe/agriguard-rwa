@@ -48,6 +48,7 @@ export default function Home() {
   // Define the effect to fetch data when the component mounts
   useEffect(() => {
     // Define the URL of your backend endpoint
+    // https://ecedilink.onrender.com
     const backendURL = "https://ecedilink.onrender.com/farm-fields"; // Replace with your actual backend URL
 
     // Make a GET request to fetch the data
