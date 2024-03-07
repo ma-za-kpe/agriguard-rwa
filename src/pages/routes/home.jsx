@@ -22,6 +22,7 @@ import {
   CartesianGrid,
   Line,
 } from "recharts";
+import { useConnection, useWallet } from "@solana/wallet-adapter-react";
 
 const style = {
   position: "absolute",
@@ -40,6 +41,9 @@ export default function Home() {
   const [data, setData] = useState([]);
   const [asset, setAsset] = useState([]);
   const [chartData, setChart] = useState([]);
+
+  const { connection } = useConnection();
+  const { publicKey, sendTransaction } = useWallet();
 
   // Define the effect to fetch data when the component mounts
   useEffect(() => {
@@ -149,10 +153,15 @@ export default function Home() {
   const goToFarmer = (event) => {
     event.preventDefault();
     // check if farmer already exists
-    if (Cookies.get("farmerId") === undefined) {
-      navigate("/farmer");
+    if (publicKey !== null) {
+      // const base58Pubkey = publicKey.toBase58();
+      if (Cookies.get("farmerId") === undefined) {
+        navigate("/farmer");
+      } else {
+        navigate("/dashboard");
+      }
     } else {
-      navigate("/dashboard");
+      alert("Please connect your wallet first");
     }
 
     // used for testing, clear all cookies

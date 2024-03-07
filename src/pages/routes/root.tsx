@@ -17,6 +17,11 @@ import Connect from "../Connect";
 import { useWeb3React } from "@web3-react/core";
 import Cookies from 'js-cookie';
 import Logo from "/assets/logo.png"
+import {
+  WalletModalProvider,
+  WalletDisconnectButton,
+  WalletMultiButton,
+} from "@solana/wallet-adapter-react-ui";
 
 const pages = ['Home'];
 const settings = ['Profile', 'Dashboard'];
@@ -180,12 +185,14 @@ function Root() {
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              <Connect connector={connector} hooks={hooks} name='phantom' />
+              {/* <Connect connector={connector} hooks={hooks} name='phantom' /> */}
+              <WalletMultiButton />
               {settings.map((setting) => (
                 <MenuItem key={setting} onClick={() => handleCloseUserMenu(setting)}>
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}
+               <WalletDisconnectButton />
             </Menu>
           </Box>
         </Toolbar>
