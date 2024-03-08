@@ -75,59 +75,12 @@ export default function Home() {
       });
   }, []); // Empty dependency array to ensure the effect runs only once when the component mounts
 
-  const nftImages = [
-    {
-      id: 1,
-      imageUrl: "https://placekitten.com/g/200/200",
-      title: "NFT Image 1",
-    },
-    {
-      id: 2,
-      imageUrl: "https://placekitten.com/g/200/200",
-      title: "NFT Image 2",
-    },
-    {
-      id: 3,
-      imageUrl: "https://placekitten.com/g/200/200",
-      title: "NFT Image 3",
-    },
-    {
-      id: 4,
-      imageUrl: "https://placekitten.com/g/200/200",
-      title: "NFT Image 1",
-    },
-    {
-      id: 5,
-      imageUrl: "https://placekitten.com/g/200/200",
-      title: "NFT Image 2",
-    },
-    {
-      id: 6,
-      imageUrl: "https://placekitten.com/g/200/200",
-      title: "NFT Image 3",
-    },
-    {
-      id: 7,
-      imageUrl: "https://placekitten.com/g/200/200",
-      title: "NFT Image 1",
-    },
-    {
-      id: 8,
-      imageUrl: "https://placekitten.com/g/200/200",
-      title: "NFT Image 2",
-    },
-    {
-      id: 9,
-      imageUrl: "https://placekitten.com/g/200/200",
-      title: "NFT Image 3",
-    },
-  ];
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = async (assetId) => {
     console.log(assetId);
     setOpen(true);
     event.preventDefault();
+    // hide apikey, and change to mainnet
     const url = `https://devnet.helius-rpc.com/?api-key=b96c6058-3f8a-414d-a166-722d95fe5c54`;
     const response = await fetch(url, {
       method: "POST",
