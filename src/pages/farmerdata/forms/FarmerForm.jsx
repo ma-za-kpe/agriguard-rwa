@@ -29,19 +29,25 @@ function FarmerForm() {
     });
   };
 
+  let url;
+  if (process.env.NODE_ENV === "development") {
+    // Use localhost URL for development
+    url = "http://localhost:3000";
+  } else {
+    // Use production URL for other environments
+    url = "https://ecedilink.onrender.com";
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       console.log(formData);
 
-      const response = await fetch(
-        "https://ecedilink.onrender.com/farmer-fields",
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(formData),
-        }
-      );
+      const response = await fetch(`${url}/farmer-fields`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
       if (!response.ok) {
         throw new Error(`Error: ${response.statusText}`);

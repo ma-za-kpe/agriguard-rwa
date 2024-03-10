@@ -83,6 +83,24 @@ const Farm = () => {
     });
   };
 
+  let url;
+  if (process.env.NODE_ENV === "development") {
+    // Use localhost URL for development
+    url = "http://localhost:3000";
+  } else {
+    // Use production URL for other environments
+    url = "https://ecedilink.onrender.com";
+  }
+
+  let ndvi;
+  if (process.env.NODE_ENV === "development") {
+    // Use localhost URL for development
+    ndvi = "http://localhost:8000";
+  } else {
+    // Use production URL for other environments
+    ndvi = "https://ndvi-vwp8.onrender.com";
+  }
+
   const handleSubmit = async (event) => {
     event.preventDefault();
 
@@ -100,7 +118,7 @@ const Farm = () => {
         farmerFields: Cookies.get("farmerId"),
       };
       // console.log(updatedFormData);
-      const response = await fetch("http://localhost:3000/farm-fields/", {
+      const response = await fetch(`${url}/farm-fields/`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedFormData),
@@ -113,7 +131,7 @@ const Farm = () => {
       // Extracting coordinates
       // Making the request with only coordinates
       axios
-        .post("https://ndvi-vwp8.onrender.com/ndvi/", requestData)
+        .post(`${ndvi}/ndvi/`, requestData)
         .then((response) => {
           console.log("Request successful:", response.data.cvs_data);
           // update the users farm profile with new ndvi chat data
@@ -126,7 +144,7 @@ const Farm = () => {
           axios
             .put(
               //
-              `https://ecedilink.onrender.com/farm-fields/${data._id}`,
+              `${url}/farm-fields/${data._id}`,
               newData
             )
             .then((response) => {

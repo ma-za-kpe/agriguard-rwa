@@ -45,11 +45,19 @@ export default function Home() {
   const { connection } = useConnection();
   const { publicKey, sendTransaction } = useWallet();
 
+  let url;
+  if (process.env.NODE_ENV === "development") {
+    // Use localhost URL for development
+    url = "http://localhost:3000";
+  } else {
+    // Use production URL for other environments
+    url = "https://ecedilink.onrender.com";
+  }
+
   // Define the effect to fetch data when the component mounts
   useEffect(() => {
     // Define the URL of your backend endpoint
-    // https://ecedilink.onrender.com
-    const backendURL = "https://ecedilink.onrender.com/farm-fields"; // Replace with your actual backend URL
+    const backendURL = `${url}/farm-fields`; // Replace with your actual backend URL
 
     // Make a GET request to fetch the data
     axios

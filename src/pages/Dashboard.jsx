@@ -25,14 +25,17 @@ const Dashboard = () => {
 
   const [imageData, setImageData] = useState(null);
   const [ndviData, setNdviData] = useState([]);
+  let url;
+  if (process.env.NODE_ENV === "development") {
+    // Use localhost URL for development
+    url = "http://localhost:3000";
+  } else {
+    // Use production URL for other environments
+    url = "https://ecedilink.onrender.com";
+  }
 
   useEffect(() => {
-    // Define the URL of your backend endpoint
-    // https://ecedilink.onrender.com
-
-    const backendURL = `https://ecedilink.onrender.com/farmfields/${Cookies.get(
-      "farmerId"
-    )}`; // Replace with your actual backend URL
+    const backendURL = `${url}/farmfields/${Cookies.get("farmerId")}`; // Replace with your actual backend URL
 
     // Make a GET request to fetch the data
     axios
